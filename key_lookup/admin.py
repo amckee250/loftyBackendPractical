@@ -1,3 +1,4 @@
 from django.contrib import admin
+from key_lookup.models import ItemModel
 
-# Register your models here.
+admin.site.register(ItemModel)

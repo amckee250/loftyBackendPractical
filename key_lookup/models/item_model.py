@@ -15,8 +15,19 @@ class ItemModel(models.Model):
     item_key = models.CharField(unique=True, max_length=10)
     item_value = models.IntegerField(default=1)
 
+    def increment_value(self, amount):
+        """
+        Void function, updates obj value field by 1
+
+        Future Development: If functionality for bulk incrementing is needed,
+            consider using F() expressions for SQL level updating
+            EX: ItemModel.objects.filter(<query filters>).update(item_value=F('item_value') + 1)
+        """
+        self.item_value += amount
+        self.save()
+
     def __str__(self):
-        return f'Key: {self.item_key} - Value:{self.item_value[:20]}'
+        return f'Key: {self.item_key} - Value:{self.item_value}'
 
 
 
