@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'key_lookup',
+    'verified_puppers'
 ]
 
 MIDDLEWARE = [
