@@ -9,7 +9,7 @@ class ItemModelCreateOrList(generics.ListCreateAPIView):
     """
     ViewSet to Create and List API endpoint for ItemModel
 
-    Note: Open to read only, must be logged in (via admin panel session) to create
+    Note: Open to read only, must be logged in (via session) to create
     """
     queryset = ItemModel.objects.all()
     serializer_class = ItemModelSerializer

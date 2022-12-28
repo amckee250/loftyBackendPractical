@@ -27,7 +27,7 @@ class ItemModel(models.Model):
         self.save()
 
     def __str__(self):
-        return f'Key: {self.item_key} - Value:{self.item_value}'
+        return f'Key: {self.item_key} - Value: {self.item_value}'
 
 
 
