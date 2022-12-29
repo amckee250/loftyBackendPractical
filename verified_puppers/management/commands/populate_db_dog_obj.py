@@ -37,7 +37,7 @@ class Command(BaseCommand):
                     dog.extract_image_metadata()
 
                 # Successfully created
-                self.stdout.write(self.style.SUCCESS('24 Dog objects were successfully created'))
+                self.stdout.write(self.style.SUCCESS('Woof!\n24 Dog objects were successfully created'))
 
         except ConnectionError:
             self.stdout.write(self.style.SUCCESS('Connection Error: No dogs created'))

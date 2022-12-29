@@ -1,10 +1,10 @@
 import json
 import requests
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 from PIL.ExifTags import TAGS
 from django.db import models
 
-from lofty_backend_practical_proj.constants import DOG_IMG_API_ENDPOINT, TEMP_IMG_NAME
+from lofty_backend_practical_proj.constants import DOG_IMG_API_ENDPOINT, TEMP_IMG_NAME, TEMP_IMG_MODIFIED_NAME
 
 
 class Dog(models.Model):
@@ -42,7 +42,7 @@ class Dog(models.Model):
 
     def extract_image_metadata(self):
         """
-        Method for extracting and returning meta and exif data from original_image
+        Void method for extracting and assigning meta and exif data from original_image
         """
 
         # Download from path for further processing
@@ -74,6 +74,30 @@ class Dog(models.Model):
 
         self.img_exifdata = exifdata_tagged
         self.save()
+
+    def generate_modified_image(self):
+        """
+        Void method that takes temp image, updates the image with a
+        human-readable and logo graphic
+        """
+        # Open image and set watermark properties
+        image = Image.open(TEMP_IMG_NAME)
+        draw = ImageDraw.Draw(image)
+        text = f"Verified by a Human"
+        font = ImageFont.truetype(
+            font='lofty_backend_practical_proj/fonts/Kanit-SemiBold.ttf',
+            size=round((image.width + image.height) / 25)
+        )
+        text_width, text_height = draw.textsize(text, font)
+
+        # Assign font to lower right corner of image
+        x = image.width - text_width - (image.width * 0.05)
+        y = image.height - text_height - (image.height * 0.05)
+
+        # Draw and save
+        draw.text((x, y), text, font=font, fill=(255, 0, 0))
+        image.show()
+        image.save(TEMP_IMG_MODIFIED_NAME)
 
     def __str__(self):
         return f'Dog: {self.id}'
