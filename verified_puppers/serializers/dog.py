@@ -13,16 +13,3 @@ class DogAllSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dog
         fields = '__all__'
-
-
-class DogCreateSerializer(serializers.ModelSerializer):
-    """
-    Serializer for Dog create usage
-    """
-
-    class Meta:
-        model = Dog
-        fields = ['original_img']
-
-    def create(self, validated_data):
-        return Dog(**validated_data)

@@ -1,8 +1,7 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db import IntegrityError, transaction
 
 from verified_puppers.models import Dog
-from verified_puppers.serializers import DogCreateSerializer
 
 
 class Command(BaseCommand):
