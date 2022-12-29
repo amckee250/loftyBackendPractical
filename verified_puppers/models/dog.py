@@ -53,7 +53,7 @@ class Dog(models.Model):
         # Assign basic metadata
         self.img_width = image.width
         self.img_height = image.height
-        self.img_aspect_ratio = max(image.width, image.height) / min(image.width, image.height)
+        self.img_aspect_ratio = image.width / image.height
         self.img_format = image.format
         self.img_mode = image.mode
         self.is_img_animated = getattr(image, "is_animated", False)
