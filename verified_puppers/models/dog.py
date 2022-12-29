@@ -1,6 +1,5 @@
 import json
 import requests
-import urllib.request
 from PIL import Image
 from PIL.ExifTags import TAGS
 from django.db import models
@@ -15,7 +14,7 @@ class Dog(models.Model):
     """
     # Unique to ensure no duplicates
     original_img = models.URLField(unique=True)
-    modified_img = models.JSONField(null=True)
+    modified_img = models.URLField(null=True)
 
     # Meta and Exif data
     img_width = models.IntegerField(null=True)
@@ -28,12 +27,12 @@ class Dog(models.Model):
     img_exifdata = models.JSONField(null=True)
 
     @classmethod
-    def fetch_original_img(cls):
+    def fetch_original_images(cls, count):
         """
         Class Method for returning original_image from random dog image URL from Dog.ceo
         """
 
-        response = requests.get(DOG_IMG_API_ENDPOINT)
+        response = requests.get(f'{DOG_IMG_API_ENDPOINT}{count}')
 
         if response.status_code != 200:
             raise ConnectionError
@@ -45,7 +44,10 @@ class Dog(models.Model):
         """
         Method for extracting and returning meta and exif data from original_image
         """
-        urllib.request.urlretrieve(self.original_img, TEMP_IMG_NAME)
+
+        # Download from path for further processing
+        with open(TEMP_IMG_NAME, 'wb') as f:
+            f.write(requests.get(self.original_img).content)
         image = Image.open(TEMP_IMG_NAME)
 
         # Assign basic metadata
