@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from key_lookup.serializers import ItemModelSerializer
+from key_lookup.serializers import ItemModelAllSerializer
 from key_lookup.models import ItemModel
 
 
@@ -32,7 +32,7 @@ class ItemModelIncrement(APIView):
 
             # Update and return
             item_obj.increment_value(increment_amount)
-            return Response(ItemModelSerializer(item_obj).data, status=status.HTTP_200_OK)
+            return Response(ItemModelAllSerializer(item_obj).data, status=status.HTTP_200_OK)
 
         except (TypeError, ValueError):
             return Response(status=status.HTTP_400_BAD_REQUEST)

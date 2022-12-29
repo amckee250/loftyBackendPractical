@@ -2,7 +2,7 @@ from rest_framework import serializers
 from key_lookup.models import ItemModel
 
 
-class ItemModelSerializer(serializers.ModelSerializer):
+class ItemModelAllSerializer(serializers.ModelSerializer):
     """
     Serializer for ItemModel CRUD operations
 

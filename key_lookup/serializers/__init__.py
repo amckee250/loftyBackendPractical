@@ -1,1 +1,1 @@
-from .item_model import ItemModelSerializer
+from .item_model import ItemModelAllSerializer

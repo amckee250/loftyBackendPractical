@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from key_lookup.serializers import ItemModelSerializer
+from key_lookup.serializers import ItemModelAllSerializer
 from key_lookup.models import ItemModel
 
 
@@ -12,5 +12,5 @@ class ItemModelCreateOrList(generics.ListCreateAPIView):
     Note: Open to read only, must be logged in (via session) to create
     """
     queryset = ItemModel.objects.all()
-    serializer_class = ItemModelSerializer
+    serializer_class = ItemModelAllSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
