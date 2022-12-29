@@ -27,9 +27,10 @@ class Dog(models.Model):
     frames_in_img = models.IntegerField(null=True)
     img_exifdata = models.JSONField(null=True)
 
-    def fetch_original_data(self):
+    @classmethod
+    def fetch_original_img(cls):
         """
-        Void Method for setting original_image from random dog image URL from Dog.ceo
+        Class Method for returning original_image from random dog image URL from Dog.ceo
         """
 
         response = requests.get(DOG_IMG_API_ENDPOINT)
@@ -38,9 +39,7 @@ class Dog(models.Model):
             raise ConnectionError
 
         data = json.loads(response.text)
-
-        self.original_img = data['message']
-        self.save()
+        return data['message']
 
     def extract_image_metadata(self):
         """
@@ -71,8 +70,7 @@ class Dog(models.Model):
                 data = data.decode()
             exifdata_tagged[tag] = data
 
-        self.img_exifdata = models.JSONField(null=True)
-
+        self.img_exifdata = exifdata_tagged
         self.save()
 
     def __str__(self):
