@@ -1,1 +1,1 @@
-from .dog import DogAllSerializer, DogCreateSerializer
+from .dog import DogAllSerializer

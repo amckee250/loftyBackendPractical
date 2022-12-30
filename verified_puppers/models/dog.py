@@ -18,8 +18,8 @@ class Dog(models.Model):
     """
     # Unique to ensure no duplicates
     original_img_url = models.URLField()
-    original_img = models.ImageField(null=True, upload_to='media/verified_puppers/images')
-    modified_img = models.ImageField(null=True, upload_to='media/verified_puppers/images')
+    original_img = models.ImageField(null=True, upload_to='verified_puppers/images')
+    modified_img = models.ImageField(null=True, upload_to='verified_puppers/images')
 
     # Meta and Exif data
     img_width = models.IntegerField(null=True)
@@ -35,6 +35,7 @@ class Dog(models.Model):
     def fetch_original_images(cls, count):
         """
         Class Method for returning original_image from random dog image URL from Dog.ceo
+        https://dog.ceo/dog-api/documentation/
         """
 
         response = requests.get(f'{DOG_IMG_API_ENDPOINT}{count}')
@@ -48,6 +49,9 @@ class Dog(models.Model):
     def extract_image_metadata(self):
         """
         Void method for extracting and assigning meta and exif data from original_image
+
+        Temp File Usage Resource:
+        https://stackoverflow.com/questions/16174022/download-a-remote-image-and-save-it-to-a-django-model
         """
 
         # Download from path for further processing
