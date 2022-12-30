@@ -3,7 +3,7 @@
 
 ### Submitted by: Austin McKee
 
-Django web application that emcompasses the following requirements:
+Django web application that encompasses the following requirements:
 
 	•	A dockerized Django app with a PostgreSQL database is required, any other tooling or libraries are your choice.
 	•	An API endpoint that allows keys to be created as strings with a default integer value
@@ -12,9 +12,9 @@ Django web application that emcompasses the following requirements:
 	•	An attempt should be made to update incremented values a minimum of 10 seconds, regardless of the number of requests or data currently being processed
 	•	A service that populates the database with two dozen images of dogs and any corresponding metadata from the images
 	•	An API endpoint that returns two images
-	•	A visibly modified image of a dog
-	•	The original image that was modified
-	•	Any metadata present in the original image
+        •	A visibly modified image of a dog
+        •	The original image that was modified
+        •	Any metadata present in the original image
 	•	Test coverage over all code where it makes sense
 
 ## Test Coverage
@@ -40,14 +40,14 @@ Once the repo is on your machine, open a terminal and we will build an image to 
 docker build
 ```
 
-Then we can start the application by using Docker Compose
+Then we will start the application by using Docker Compose
 ```bash
 docker compose up
 ```
 
 Awesome! You should be seeing the Django application humming along in your terminal.
 
-Navigate to the below address in the browser of your choice to see the app
+Navigate to the below address in the browser of your choice to view the app
 ```
 http://127.0.0.1:8000/
 ```
