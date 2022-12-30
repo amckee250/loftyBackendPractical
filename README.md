@@ -44,7 +44,7 @@ Then we will start the application by using Docker Compose
 ```bash
 docker compose up
 ```
-Note: I have found it can take some time for PostGresSQL to setup and be ready for use. If an error occurs, re-attempt docker compose up command before continuing. (Really interested in what the dev pro's at Lofty think about this issue. Is it common? Maybe a better way that I have outlined? Im curious!)
+Note: I have found it can take some time for PostGresSQL to setup and be ready for use. If an error occurs, re-attempt docker compose up command before continuing. (Really interested in what the dev pro's at Lofty think about this issue. Is it common? Maybe a better way to go about it then I have outlined? Im curious!)
 
 Awesome! You should be seeing the Django application humming along in your terminal.
 
