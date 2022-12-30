@@ -73,7 +73,12 @@ docker exec -it lofty_backend_practical_proj-web-1 bash
 
 Once you have logged into the target container, we can now run the remaining Python commands to complete install
 
-First, we will want to create a Django superuser for our app. Follow the prompts to create a user.
+First, we need to build our database tables for the application to function. Use the below code to migrate the database
+```python
+python manage.py migrate
+```
+
+Second, we will want to create a Django superuser for our app. Follow the prompts to create a user.
 ```python
 python manage.py createsuperuser
 ```
