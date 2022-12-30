@@ -30,6 +30,15 @@ class DogTests(APITestCase):
             Dog.objects.count(), 24
         )
 
+    def tearDown(self) -> None:
+        """
+        Cleanup test dog images
+        """
+        dogs = Dog.objects.all()
+        for dog in dogs:
+            dog.original_img.delete()
+            dog.modified_img.delete()
+
     def test_dog_detail(self):
         """
         Test querying Dog object detail
