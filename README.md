@@ -54,7 +54,7 @@ http://127.0.0.1:8000/
 
 Once the app is running, we will need to do a couple more django commands to prep the app for use
 
-In your terminal, find the name of the Docker image running this app using either of the below commands.
+In a new terminal, find the name of the Docker image running this app using either of the below commands.
 ```bash
 docker ps 
 ```
