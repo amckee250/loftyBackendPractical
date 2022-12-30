@@ -35,7 +35,7 @@ GitHub CLI
 gh repo clone amckee250/loftyBackendPractical
 ```
 
-Once the repo is on your machine, open a terminal and navigate to the project. We will build an image to run the project in Docker
+Once the repo is on your machine, open a terminal and navigate to the project. We will build a container to run the project in Docker
 ```bash
 docker build .
 ```
@@ -54,7 +54,7 @@ http://127.0.0.1:8000/
 
 Once the app is running, we will need to do a couple more django commands to prep the app for use
 
-In a new terminal, find the name of the Docker image running this app using either of the below commands.
+In a new terminal, find the name of the Docker container running this app using either of the below commands.
 ```bash
 docker ps 
 ```
@@ -64,7 +64,7 @@ docker container ls
 ```
 Now we can use docker exec to apply terminal commands directly to the running Docker container
 ```bash
-docker exec -it <NAME OF IMAGE> <TERMINAL TYPE>
+docker exec -it <NAME OF CONTAINER> <TERMINAL TYPE>
 ```
 IE 
 ```bash
