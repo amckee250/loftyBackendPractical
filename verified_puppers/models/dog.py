@@ -1,10 +1,14 @@
+from io import BytesIO
 import json
 import requests
+import tempfile
 from PIL import Image, ImageDraw, ImageFont
 from PIL.ExifTags import TAGS
+from django.core.files import File
 from django.db import models
 
-from lofty_backend_practical_proj.constants import DOG_IMG_API_ENDPOINT, TEMP_IMG_NAME, TEMP_IMG_MODIFIED_NAME
+from lofty_backend_practical_proj.constants import DOG_IMG_API_ENDPOINT, \
+    BASE_IMG_NAME, BASE_IMG_MODIFIED_NAME
 
 
 class Dog(models.Model):
@@ -13,8 +17,9 @@ class Dog(models.Model):
     object used in dog service and modification endpoints
     """
     # Unique to ensure no duplicates
-    original_img = models.URLField(unique=True)
-    modified_img = models.URLField(null=True)
+    original_img_url = models.URLField()
+    original_img = models.ImageField(null=True, upload_to='media/verified_puppers/images')
+    modified_img = models.ImageField(null=True, upload_to='media/verified_puppers/images')
 
     # Meta and Exif data
     img_width = models.IntegerField(null=True)
@@ -46,9 +51,22 @@ class Dog(models.Model):
         """
 
         # Download from path for further processing
-        with open(TEMP_IMG_NAME, 'wb') as f:
-            f.write(requests.get(self.original_img).content)
-        image = Image.open(TEMP_IMG_NAME)
+        response = requests.get(self.original_img_url, stream=True)
+
+        # Temp file for saving to model
+        temp_img = tempfile.NamedTemporaryFile()
+
+        # Read the streamed image in sections
+        for block in response.iter_content(1024 * 8):
+            # If no more file, stop
+            if not block:
+                break
+            # Write image block to temporary file
+            temp_img.write(block)
+
+        self.original_img.save(f'{BASE_IMG_NAME}{self.id}.jpg', File(temp_img))
+
+        image = Image.open(self.original_img)
 
         # Assign basic metadata
         self.img_width = image.width
@@ -81,23 +99,25 @@ class Dog(models.Model):
         human-readable and logo graphic
         """
         # Open image and set watermark properties
-        image = Image.open(TEMP_IMG_NAME)
+        image = Image.open(self.original_img)
+        # image = Image.open(self.original_image_path)
         draw = ImageDraw.Draw(image)
         text = f"Verified by a Human"
         font = ImageFont.truetype(
             font='lofty_backend_practical_proj/fonts/Kanit-SemiBold.ttf',
-            size=round((image.width + image.height) / 25)
+            size=round(image.width / 12)
         )
         text_width, text_height = draw.textsize(text, font)
 
         # Assign font to lower right corner of image
-        x = image.width - text_width - (image.width * 0.05)
-        y = image.height - text_height - (image.height * 0.05)
+        text_pos_x = image.width - text_width - (image.width * 0.05)
+        text_pos_y = image.height - text_height - (image.height * 0.05)
 
-        # Draw and save
-        draw.text((x, y), text, font=font, fill=(255, 0, 0))
-        image.show()
-        image.save(TEMP_IMG_MODIFIED_NAME)
+        # Draw and save using BytesIO
+        draw.text((text_pos_x, text_pos_y), text, font=font, fill=(255, 0, 0))
+        blob = BytesIO()
+        image.save(blob, 'JPEG')
+        self.modified_img.save(f'{BASE_IMG_MODIFIED_NAME}{self.id}.jpg', File(blob))
 
     def __str__(self):
         return f'Dog: {self.id}'
