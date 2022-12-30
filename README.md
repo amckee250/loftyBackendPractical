@@ -1,4 +1,5 @@
-# Lofty Backend Practical 2
+# ![My Image](lofty.png) 
+# Backend Practical Test
 
 ### Submitted by: Austin McKee
 
