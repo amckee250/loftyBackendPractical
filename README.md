@@ -22,28 +22,104 @@ Django web application that emcompasses the following requirements:
 ![My Image](code_coverage.png)
 
 
-## Installation
+## Installation with Docker
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Below we will walk through together how to create functional a development environment of the app
 
+Ensure you have an updated version of [Docker](https://docs.docker.com/get-docker/) installed on your machine.
+
+Clone this repo from the above links or by using GitHub CLI
+
+GitHub CLI
 ```bash
-pip install foobar
+gh repo clone amckee250/loftyBackendPractical
 ```
 
-## Usage
+Once the repo is on your machine, open a terminal and we will build an image to run the project in Docker
+```bash
+docker build
+```
 
+Then we can start the application by using Docker Compose
+```bash
+docker compose up
+```
+
+Awesome! You should be seeing the Django application humming along in your terminal.
+
+Navigate to the below address in the browser of your choice to see the app
+```
+http://127.0.0.1:8000/
+```
+
+Once the app is running, we will need to do a couple more django commands to prep the app for use
+
+In your terminal, find the name of the Docker image running this app using either of the below commands.
+```bash
+docker ps 
+```
+OR
+```bash
+docker container ls
+```
+Now we can use docker exec to apply terminal commands directly to the running Docker container
+```bash
+docker exec -it <NAME OF IMAGE> <TERMINAL TYPE>
+```
+IE 
+```bash
+docker exec -it lofty_backend_practical_proj-web-1 bash
+```
+
+Once you have logged into the target container, we can now run the remaining Python commands to complete install
+
+First, we will want to create a Django superuser for our app. Follow the prompts to create a user.
 ```python
-import foobar
-
-# returns 'words'
-foobar.pluralize('word')
-
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
+python manage.py createsuperuser
 ```
+
+Great! Now you can login to the app at the below address
+```
+http://127.0.0.1:8000/admin
+```
+## Database Population Service
+Per requirements, a service is included via a Django command to populate the database with two dozen images of dogs and any corresponding metadata from the images.
+
+In your terminal, we will access the Docker container running our app again
+```bash
+docker exec -it <NAME OF IMAGE> <TERMINAL TYPE>
+```
+IE 
+```bash
+docker exec -it lofty_backend_practical_proj-web-1 bash
+```
+
+Once in the container terminal, we can then run the following command to populate the database with 24 images of dogs. Woof!
+```bash
+python manage.py populate_db_dog_obj
+```
+
+This command can be ran any amount of times to populate the database with 24 more images of dogs. If you would like to remove all Dog objects from the database and replace those with 24 new objects. The "--fresh_db true" flag can be used to do so.
+```bash
+python manage.py populate_db_dog_obj --fresh_db true
+```
+
+
+## API Documentation
+
+This app is fully supported with API documentation using OpenAPI & Swagger.
+With the application running, navigate to either of the below links to find full documentation of API endpoint usage
+
+Swagger Docs
+```
+http://127.0.0.1:8000/swagger/
+```
+
+OpenAPI Docs
+```
+http://127.0.0.1:8000/redoc/
+```
+
 
 ## Thank you's all around
 
