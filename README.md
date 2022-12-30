@@ -35,9 +35,9 @@ GitHub CLI
 gh repo clone amckee250/loftyBackendPractical
 ```
 
-Once the repo is on your machine, open a terminal and we will build an image to run the project in Docker
+Once the repo is on your machine, open a terminal and navigate to the project. We will build an image to run the project in Docker
 ```bash
-docker build
+docker build .
 ```
 
 Then we will start the application by using Docker Compose
